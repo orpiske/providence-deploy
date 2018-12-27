@@ -1,0 +1,14 @@
+---
+- name: Download providence
+  hosts: all
+  vars:
+    providence_collector_url: "{{ lookup('env','PROVIDENCE_COLLECTOR_DOWNLOAD_URL') | default('', true) }}"
+  tasks:
+    - name: "Download"
+      shell: 'cd /home/otavio/deploy/providence && wget -c {{ providence_collector_url }} -O providence-collector.tar.gz'
+    - name: "Extract"
+      shell: 'cd /home/otavio/deploy/providence && tar -xvf providence-collector.tar.gz -C /home/otavio/tools/'
+    - name: "Restart"
+      shell: '/home/otavio/tools/providence-collector/bin/providence-collector-service restart'
+    - name: "Cleanup"
+      shell: 'rm /home/otavio/deploy/providence/*'
