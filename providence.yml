@@ -6,8 +6,10 @@
   tasks:
     - name: "Download"
       shell: 'cd /home/otavio/deploy/providence && wget -c {{ providence_collector_url }} -O providence-collector.tar.gz'
+    - name: "Remove old providence"
+      file: 'rm -rf /home/otavio/tools/providence-collector*'
     - name: "Extract"
-      shell: 'cd /home/otavio/deploy/providence && tar -xvf providence-collector.tar.gz -C /home/otavio/tools/'
+      shell: 'cd /home/otavio/deply/providence && tar --strip-components=1 -xvf providence-collector.tar.gz -C /home/otavio/tools/providence-collector'
     - name: "Restart"
       shell: '/home/otavio/tools/providence-collector/bin/providence-collector-service restart'
     - name: "Cleanup"
