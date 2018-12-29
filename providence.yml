@@ -10,8 +10,10 @@
       shell: 'cd {{ providence_tmp_deploy_dir }} && wget -c {{ providence_collector_url }} -O providence-collector.tar.gz'
     - name: "Remove old providence"
       shell: 'rm -rf /home/otavio/tools/providence-collector*'
+    - name: "Create install dir"
+      shell: 'mkdir -p {{ providence_tmp_deploy_dir }}'
     - name: "Extract"
-      shell: 'cd {{ providence_tmp_deploy_dir }} && tar --strip-components=1 -xvf providence-collector.tar.gz -C {{ providence_install_dir }}'
+      shell: 'tar --strip-components=1 -xvf providence-collector.tar.gz -C {{ providence_tmp_deploy_dir }}'
     - name: "Restart"
       shell: '{{ providence_install_dir }}/bin/providence-collector-service restart'
     - name: "Cleanup"
