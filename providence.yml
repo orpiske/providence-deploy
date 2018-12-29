@@ -3,18 +3,17 @@
   hosts: all
   vars:
     providence_collector_url: "{{ lookup('env','PROVIDENCE_COLLECTOR_DOWNLOAD_URL') | default('', true) }}"
-    providence_tmp_deploy_dir: /home/otavio/deploy/providence
     providence_install_dir: /home/otavio/tools/providence-collector
   tasks:
     - name: "Download"
-      shell: 'cd {{ providence_tmp_deploy_dir }} && wget -c {{ providence_collector_url }} -O providence-collector.tar.gz'
+      shell: 'wget -c {{ providence_collector_url }} -O /tmp/providence-collector.tar.gz'
     - name: "Remove old providence"
       shell: 'rm -rf /home/otavio/tools/providence-collector*'
     - name: "Create install dir"
-      shell: 'mkdir -p {{ providence_tmp_deploy_dir }}'
+      shell: 'mkdir -p {{ providence_install_dir }}'
     - name: "Extract"
-      shell: 'tar --strip-components=1 -xvf {{ providence_tmp_deploy_dir }}/providence-collector.tar.gz -C {{ providence_tmp_deploy_dir }}'
+      shell: 'tar --strip-components=1 -xvf /tmp/providence-collector.tar.gz -C {{ providence_install_dir }}'
     - name: "Restart"
       shell: '{{ providence_install_dir }}/bin/providence-collector-service restart'
     - name: "Cleanup"
-      shell: 'rm {{ providence_tmp_deploy_dir }}/*'
+      shell: 'rm /tmp/providence-collector.tar.gz'
