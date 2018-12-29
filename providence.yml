@@ -13,7 +13,7 @@
     - name: "Create install dir"
       shell: 'mkdir -p {{ providence_tmp_deploy_dir }}'
     - name: "Extract"
-      shell: 'tar --strip-components=1 -xvf providence-collector.tar.gz -C {{ providence_tmp_deploy_dir }}'
+      shell: 'tar --strip-components=1 -xvf {{ providence_tmp_deploy_dir }}/providence-collector.tar.gz -C {{ providence_tmp_deploy_dir }}'
     - name: "Restart"
       shell: '{{ providence_install_dir }}/bin/providence-collector-service restart'
     - name: "Cleanup"
