@@ -3,12 +3,12 @@
   hosts: all
   vars:
     providence_collector_url: "{{ lookup('env','PROVIDENCE_COLLECTOR_DOWNLOAD_URL') | default('', true) }}"
-    providence_install_dir: /home/otavio/tools/providence-collector
+    providence_install_dir: /home/pi/tools/providence-collector
   tasks:
     - name: "Download"
       shell: 'wget -c {{ providence_collector_url }} -O /tmp/providence-collector.tar.gz'
     - name: "Remove old providence"
-      shell: 'rm -rf /home/otavio/tools/providence-collector*'
+      shell: 'rm -rf {{ providence_install_dir }}'
     - name: "Create install dir"
       shell: 'mkdir -p {{ providence_install_dir }}'
     - name: "Extract"
